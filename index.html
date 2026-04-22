@@ -50,24 +50,28 @@
   </div>
 
   <script>
+    // Inicialización normal
     microsoftTeams.app.initialize().then(() => {
       document.getElementById('status').innerText = 'Teams detectado ✅';
     }).catch(() => {
       document.getElementById('status').innerText = 'Ejecutando fuera de Teams';
     });
 
+    // ESTA ES LA FUNCIÓN QUE CAMBIAMOS
     function abrirApp() {
-      document.getElementById('status').innerText = 'Abriendo...';
+      document.getElementById('status').innerText = 'Abriendo externamente...';
       
       microsoftTeams.app.initialize().then(() => {
-        // Dentro de Teams — usa el método oficial
-        microsoftTeams.app.openLink('designapp://abrir').then(() => {
-          document.getElementById('status').innerText = 'App lanzada ✅';
+        // IMPORTANTE: Cambia esta URL por la ruta real de tu repositorio en GitHub Pages
+        const urlPuente = 'https://liamonassis.github.io/designapp-launcher/lanzador.html';
+        
+        microsoftTeams.app.openLink(urlPuente).then(() => {
+          document.getElementById('status').innerText = 'Navegador externo lanzado ✅';
         }).catch((err) => {
           document.getElementById('status').innerText = 'Error: ' + err;
         });
       }).catch(() => {
-        // Fuera de Teams — abre normal
+        // Si el usuario abre este index fuera de Teams, el protocolo directo sí funciona
         window.location.href = 'designapp://abrir';
       });
     }
