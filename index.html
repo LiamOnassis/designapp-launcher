@@ -24,7 +24,9 @@
     }
     h1 { color: #1a1a2e; margin-bottom: 8px; font-size: 24px; }
     p { color: #666; margin-bottom: 32px; }
-    button {
+    
+    /* Cambiamos la etiqueta button por una clase .btn para el enlace */
+    .btn {
       background: #0078D4;
       color: white;
       border: none;
@@ -32,8 +34,11 @@
       border-radius: 8px;
       font-size: 16px;
       cursor: pointer;
+      text-decoration: none; /* Quita el subrayado del enlace */
+      display: inline-block; /* Permite aplicar padding y dimensiones */
     }
-    button:hover { background: #005a9e; }
+    .btn:hover { background: #005a9e; }
+    
     #status {
       margin-top: 16px;
       font-size: 13px;
@@ -45,36 +50,19 @@
   <div class="card">
     <h1>Design App</h1>
     <p>ES Metals SAS</p>
-    <button onclick="abrirApp()">Abrir Design App</button>
+    
+    <a href="https://liamonassis.github.io/designapp-launcher/lanzador.html" target="_blank" rel="noopener noreferrer" class="btn">Abrir Design App</a>
+    
     <div id="status"></div>
   </div>
 
   <script>
-    // Inicialización normal
+    // Solo dejamos la inicialización para confirmar si estamos dentro de Teams
     microsoftTeams.app.initialize().then(() => {
       document.getElementById('status').innerText = 'Teams detectado ✅';
     }).catch(() => {
       document.getElementById('status').innerText = 'Ejecutando fuera de Teams';
     });
-
-    // ESTA ES LA FUNCIÓN QUE CAMBIAMOS
-    function abrirApp() {
-      document.getElementById('status').innerText = 'Abriendo externamente...';
-      
-      microsoftTeams.app.initialize().then(() => {
-        // IMPORTANTE: Cambia esta URL por la ruta real de tu repositorio en GitHub Pages
-        const urlPuente = 'https://liamonassis.github.io/designapp-launcher/lanzador.html';
-        
-        microsoftTeams.app.openLink(urlPuente).then(() => {
-          document.getElementById('status').innerText = 'Navegador externo lanzado ✅';
-        }).catch((err) => {
-          document.getElementById('status').innerText = 'Error: ' + err;
-        });
-      }).catch(() => {
-        // Si el usuario abre este index fuera de Teams, el protocolo directo sí funciona
-        window.location.href = 'designapp://abrir';
-      });
-    }
   </script>
 </body>
 </html>
