@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Design App</title>
+  <script src="https://res.cdn.office.net/teams-js/2.22.0/js/MicrosoftTeams.min.js"></script>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
@@ -33,6 +34,11 @@
       cursor: pointer;
     }
     button:hover { background: #005a9e; }
+    #status {
+      margin-top: 16px;
+      font-size: 13px;
+      color: #888;
+    }
   </style>
 </head>
 <body>
@@ -40,25 +46,30 @@
     <h1>Design App</h1>
     <p>ES Metals SAS</p>
     <button onclick="abrirApp()">Abrir Design App</button>
+    <div id="status"></div>
   </div>
 
   <script>
+    microsoftTeams.app.initialize().then(() => {
+      document.getElementById('status').innerText = 'Teams detectado ✅';
+    }).catch(() => {
+      document.getElementById('status').innerText = 'Ejecutando fuera de Teams';
+    });
+
     function abrirApp() {
-      // Intento 1 - window.open
-      var w = window.open('designapp://abrir', '_blank');
+      document.getElementById('status').innerText = 'Abriendo...';
       
-      // Intento 2 - si falla, usa un iframe oculto
-      setTimeout(function() {
-        if (!w || w.closed) {
-          var iframe = document.createElement('iframe');
-          iframe.style.display = 'none';
-          iframe.src = 'designapp://abrir';
-          document.body.appendChild(iframe);
-          setTimeout(function() {
-            document.body.removeChild(iframe);
-          }, 2000);
-        }
-      }, 500);
+      microsoftTeams.app.initialize().then(() => {
+        // Dentro de Teams — usa el método oficial
+        microsoftTeams.app.openLink('designapp://abrir').then(() => {
+          document.getElementById('status').innerText = 'App lanzada ✅';
+        }).catch((err) => {
+          document.getElementById('status').innerText = 'Error: ' + err;
+        });
+      }).catch(() => {
+        // Fuera de Teams — abre normal
+        window.location.href = 'designapp://abrir';
+      });
     }
   </script>
 </body>
