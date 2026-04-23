@@ -14,7 +14,6 @@
     
     body {
       font-family: 'Segoe UI', sans-serif;
-      /* Imagen de fondo conectada directamente a tu repositorio */
       background: url('https://raw.githubusercontent.com/LiamOnassis/designapp-launcher/refs/heads/main/PORTADA%20INDUCCIONES.png') no-repeat center center fixed;
       background-size: cover;
       height: 100vh;
@@ -26,7 +25,6 @@
       overflow: hidden;
     }
 
-    /* Capa semi-transparente para mejorar el contraste visual */
     .overlay {
       position: absolute;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -48,7 +46,7 @@
 
     /* --- ENCABEZADO --- */
     .header .logo {
-      max-height: 80px; /* Ajusta este valor si el logo se ve muy grande o pequeño */
+      max-height: 80px; 
       object-fit: contain;
     }
 
@@ -80,23 +78,13 @@
       transform: scale(1.02);
     }
 
-    #status {
-      margin-top: 15px;
-      font-size: 14px;
-      color: #000;
-      font-weight: 600;
-      background: rgba(255, 255, 255, 0.7);
-      padding: 4px 12px;
-      border-radius: 20px;
-    }
-
     /* --- PIE DE PÁGINA --- */
     .footer {
       text-align: center;
     }
 
     .footer img {
-      max-height: 50px; /* Ajusta el tamaño de las firmas aquí */
+      max-height: 50px; 
       margin-bottom: 8px;
       object-fit: contain;
     }
@@ -122,7 +110,6 @@
 
     <div class="center-section">
       <a href="https://liamonassis.github.io/designapp-launcher/lanzador.html" target="_blank" rel="noopener noreferrer" class="btn">Iniciar Inducción</a>
-      <div id="status">Verificando...</div>
     </div>
 
     <div class="footer">
@@ -133,11 +120,9 @@
   </div>
 
   <script>
-    // Inicialización de Teams
-    microsoftTeams.app.initialize().then(() => {
-      document.getElementById('status').innerText = 'Teams detectado ✅';
-    }).catch(() => {
-      document.getElementById('status').innerText = 'Ejecutando fuera de Teams';
+    // Inicialización de Teams en segundo plano (sin mostrar mensajes en pantalla)
+    microsoftTeams.app.initialize().catch(() => {
+      // Falla silenciosamente si se ejecuta fuera de Teams
     });
   </script>
 </body>
